@@ -7,7 +7,8 @@ export const createBook = async (req: Request, res: Response) => {
 };
 
 export const getBooks = async (req: Request, res: Response) => {
-  const books = bookService.getBooks();
+  const searchTerm = req.query.search as string;
+  const books = bookService.getBooks(searchTerm);
   res.status(200).json(books);
 };
 
@@ -31,3 +32,4 @@ export const deleteBook = async (req: Request, res: Response) => {
   bookService.deleteBook(parseInt(req.params.id));
   res.status(204).send();
 };
+

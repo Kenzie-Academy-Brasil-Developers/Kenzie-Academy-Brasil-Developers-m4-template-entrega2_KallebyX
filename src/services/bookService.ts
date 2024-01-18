@@ -2,7 +2,7 @@ import { Book, booksDatabase } from '../database/database';
 
 export const createBook = (bookData: Omit<Book, 'id' | 'createdAt' | 'updatedAt'>): Book => {
   const newBook: Book = {
-    id: booksDatabase.length + 1,
+    id: booksDatabase.length + 1, // Ensure this generates a unique ID
     ...bookData,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -11,7 +11,12 @@ export const createBook = (bookData: Omit<Book, 'id' | 'createdAt' | 'updatedAt'
   return newBook;
 };
 
-export const getBooks = (): Book[] => {
+export const getBooks = (searchTerm?: string): Book[] => {
+  if (searchTerm) {
+    return booksDatabase.filter(book =>
+      book.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
   return booksDatabase;
 };
 
